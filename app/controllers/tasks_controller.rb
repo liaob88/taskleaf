@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: %i[show edit update destroy]
+
   def index
     @tasks = Task.all
   end
@@ -8,7 +10,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def create
@@ -18,16 +19,23 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
   end
 
   def update
-    task = Task.find(params[:id])
-    task.update!(task_params)
-    redirect_to tasks_url, notice: "タスク「#{task.name}」の編集が完了しました"
+    @task.update!(task_params)
+    redirect_to tasks_url, notice: "タスク「#{@task.name}」の編集が完了しました"
+  end
+
+  def destroy
+    @task.destroy!
+    redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました"
   end
 
   private
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def task_params 
     params.require(:task).permit(:name, :description)
