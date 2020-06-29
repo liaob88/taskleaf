@@ -1,19 +1,3 @@
 h1 ユーザー登録
-= form_with model: [:admin, @user], local: true do |f|
-  .form-group
-    = f.label :name, '名前'
-    = f.text_field :name, class: "form-control"
-  .form-group
-    = f.label :name, 'メールアドレス'
-    = f.text_field :email, class: "form-control"
-  .form-check
-    = f.label :admin, class: 'form-check-label' do
-      = f.check_box :admin, class: "form-check-input"
-      | 管理者権限
-  .form-group
-    = f.label :password, 'パスワード'
-    = f.password_field :password, class: "form-control"
-  .form-group
-    = f.label :password_digest, 'パスワード(確認)'
-    = f.password_field :password_digest, class: "form-control"
-  = f.submit '登録する', class: 'btn btn-primary' 
+= render partial: 'form', locals: { task: @user }
+
