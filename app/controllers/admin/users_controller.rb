@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  before_action :set_user, except: %i[new, create, index]
+
   def new
     @user = User.new
   end
@@ -22,6 +24,11 @@ class Admin::UsersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find_by(id: params[:id])
+  end
+
   def user_params
     params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
   end
