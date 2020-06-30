@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_action :require_admin
   before_action :set_user, except: %i[new, create, index]
 
   def new
@@ -41,6 +42,10 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:id])
+  end
+
+  def require_admin
+    redirect_to root_path unless current_user.admin?
   end
 
   def user_params

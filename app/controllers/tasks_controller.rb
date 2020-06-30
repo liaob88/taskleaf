@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
   end
 
   def new
@@ -13,7 +13,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       redirect_to tasks_url(@task), notice: "タスク「#{@task.name}」を登録しました"
@@ -38,7 +38,7 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def task_params 
