@@ -21,7 +21,7 @@ class TasksController < ApplicationController
     end
 
     if @task.save
-      redirect_to tasks_url(@task), notice: "タスク「#{@task.name}」を登録しました"
+      redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました"
     else
       render :new
     end
